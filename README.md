@@ -22,7 +22,7 @@ E(id,'Velocity',{x:1,y:0})
 
 function move(){
 
-  E('Velocity').each(function(positionData,entityID){
+  E('Velocity').each(function(velocity,entityID){
   
     //grab components with the same id
     var pos = E('Position',entityID);
