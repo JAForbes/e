@@ -105,6 +105,7 @@ Now `systems.move` will query all `Position` data and update it with their curre
 
 I'll make one more, very important change to the `loop` function, that will make adding new systems much easier.
 
+```
 (function loop(){
  
   var callOrder = [
