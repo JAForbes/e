@@ -51,6 +51,12 @@
 	```
 */
 
+var isNode = typeof require != 'undefined';
+
+if(isNode){
+	var _ = require('underscore')
+}
+
 E = (function(){
 
 	var components = {};
@@ -140,6 +146,6 @@ E = (function(){
 	return router;
 })();
 
-if(typeof require != 'undefined'){
+if(isNode){
 	module.exports = E;
 }

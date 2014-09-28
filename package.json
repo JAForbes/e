@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/JAForbes/e/issues"
   },
-  "homepage": "https://github.com/JAForbes/e"
+  "homepage": "https://github.com/JAForbes/e",
+  "dependencies": {
+    "underscore": "^1.7.0"
+  }
 }
