@@ -139,3 +139,7 @@ E = (function(){
 
 	return router;
 })();
+
+if(typeof require != 'undefined'){
+	module.exports = E;
+}
