@@ -21,6 +21,21 @@
 	Creates multiple components and attaches them to a new entity.
 	Returns the new entity id
 
+	E(<id>,{
+	  Movement: {...},
+	  Position: {...},
+	})
+	```
+	
+	Mixins in multiple components to an existing entity.
+
+	
+	```
+	E(<id>)
+	```
+
+	Returns a hash of all components that Entity owns.
+
 	`E()`
 	Overrides the API and gives you access to the internal components hash
 
@@ -44,8 +59,8 @@ E = (function(){
 		return (type == 'String' && !isNaN(o*1)) && 'Number' || type;
 	}
 
-	function create(components){
-		var uid = _.uniqueId();
+	function create(components,uid){
+		var uid = uid || _.uniqueId();
 
 		_(components).each(function(component,componentName){
 			add(uid,componentName,component);
@@ -55,8 +70,21 @@ E = (function(){
 	}
 
 	function add(uid, componentName, component){
-		components[componentName] = components[componentName] || {};
-		components[componentName][uid] = component
+		({
+			Object: addMultiple,
+			String: addOne
+		}[type(componentName)]).apply(null,arguments)
+	}
+
+	function addOne(uid,componentName,component){
+		var current = get(component,uid)
+		components[componentName] = components[componentName] || {}
+	
+		components[componentName][uid] =  _.extend(current,component)
+	}
+
+	function addMultiple(uid,components){
+		return create(components,uid);
 	}
 
 	function get(componentName,entity){
@@ -85,12 +113,23 @@ E = (function(){
 		}
 	}
 
+	function entityGrouped(id){
+		return _.reduce(E(),function(result,group,groupName){
+		  var owned = group[id];
+		  owned && (result[groupName] = owned);
+		  return result;
+		},{})
+	}
+
 	function router(query){
 		var _type = type(query);
+		var argLength = arguments.length;
 		if (_type == 'Object'){
 			return create.apply(null,arguments)
-		} else if (_type == 'Number') {
+		} else if (_type == 'Number' && arguments.length > 1) {
 			return add.apply(null,arguments)
+		} else if (_type == 'Number' ) {
+			return entityGrouped.apply(null,arguments)
 		} else if (_type == 'String') {
 			return get.apply(null,arguments)
 		} else if (_type == 'Undefined') {
