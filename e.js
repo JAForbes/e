@@ -26,10 +26,10 @@
 	  Position: {...},
 	})
 	```
-	
+
 	Mixins in multiple components to an existing entity.
 
-	
+
 	```
 	E(<id>)
 	```
@@ -41,7 +41,7 @@
 
 	Allows you to delete component arrays and individual components
 
-	
+
 	`delete E().Position[1]`
 	Deletes entity 1's position component
 
@@ -85,7 +85,7 @@ E = (function(){
 	function addOne(uid,componentName,component){
 		var current = get(component,uid)
 		components[componentName] = components[componentName] || {}
-	
+
 		components[componentName][uid] =  _.extend(current,component)
 	}
 
@@ -103,9 +103,9 @@ E = (function(){
 		function getAll(componentName){
 			var result = components[componentName];
 			if(result){
-				return result
+				return _(result)
 			} else {
-				return []
+				return _([])
 			}
 		}
 
