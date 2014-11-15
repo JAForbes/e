@@ -103,9 +103,9 @@ E = (function(){
 		function getAll(componentName){
 			var result = components[componentName];
 			if(result){
-				return _(result)
+				return result
 			} else {
-				return _([])
+				return []
 			}
 		}
 
